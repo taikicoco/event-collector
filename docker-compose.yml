@@ -42,6 +42,14 @@ services:
     networks:
       - rest-go-network
 
+  rest-go-setup:
+    container_name: rest-go-setup
+    image: alpine:latest
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: cp pre-commit .git/hooks/pre-commit
+
 volumes:
   mysql-db:
     driver: local

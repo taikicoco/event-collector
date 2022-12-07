@@ -1,0 +1,51 @@
+version: "3.8"
+services:
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: docker/go/Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app/server
+    ports:
+      - "1222:1222"
+    restart: always
+    tty: true
+    environment:
+      ENV: "development"
+      PORT: "1222"
+      DRIVER: "mysql"
+      DATASOURCE: "user:password@tcp(mysql)/db?charset=utf8mb4&parseTime=true"
+      TZ: 'Asia/Tokyo'
+    command: sh ./scripts/api.sh
+    depends_on:
+      - mysql
+    networks:
+      - rest-go-network
+
+  mysql:
+    container_name: mysql
+    platform: "linux/x86_64"
+    image: "mysql:5.7"
+    ports:
+      - "${FORWARD_DB_PORT:-33060}:33060"
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: passwordroot
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - "mysql-db:/var/lib/mysql"
+      - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
+    networks:
+      - rest-go-network
+
+volumes:
+  mysql-db:
+    driver: local
+
+networks:
+  rest-go-network:
+    external: true

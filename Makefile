@@ -1,7 +1,9 @@
 add-network:
-	docker network create rest-go-network
+	docker network create go-network
 up:
 	docker-compose up
+build:
+	docker-compose build 
 down:
 	docker-compose down
 sh:

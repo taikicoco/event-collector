@@ -22,7 +22,7 @@ services:
     depends_on:
       - mysql
     networks:
-      - rest-go-network
+      - go-network
 
   mysql:
     container_name: mysql
@@ -40,10 +40,10 @@ services:
       - "mysql-db:/var/lib/mysql"
       - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
     networks:
-      - rest-go-network
+      - go-network
 
-  rest-go-setup:
-    container_name: rest-go-setup
+  go-setup:
+    container_name: go-api-setup
     image: alpine:latest
     volumes:
       - .:/app
@@ -55,5 +55,5 @@ volumes:
     driver: local
 
 networks:
-  rest-go-network:
+  go-network:
     external: true

@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  backend:
-    container_name: backend
+  backend-go-api:
+    container_name: backend-go-api
     build:
       context: .
       dockerfile: docker/go/Dockerfile
@@ -22,7 +22,7 @@ services:
     depends_on:
       - mysql
     networks:
-      - rest-go-network
+      - go-api
 
   mysql:
     container_name: mysql
@@ -40,10 +40,10 @@ services:
       - "mysql-db:/var/lib/mysql"
       - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
     networks:
-      - rest-go-network
+      - go-api
 
-  rest-go-setup:
-    container_name: rest-go-setup
+  go-api-setup:
+    container_name: go-api-setup
     image: alpine:latest
     volumes:
       - .:/app
@@ -55,5 +55,5 @@ volumes:
     driver: local
 
 networks:
-  rest-go-network:
+  go-api:
     external: true

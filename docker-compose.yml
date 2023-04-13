@@ -24,6 +24,7 @@ services:
     networks:
       - go-api
 
+
   mysql:
     container_name: mysql
     platform: "linux/x86_64"
@@ -43,6 +44,7 @@ services:
       - go-api
 
   go-api-setup:
+
     container_name: go-api-setup
     image: alpine:latest
     volumes:

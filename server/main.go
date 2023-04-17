@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"server/config"
 	"server/api/application"
-	"server/api/infrastracture/persistence"
 	admin_handler "server/api/handler/admin"
+	"server/api/infrastracture/persistence"
+	"server/config"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -47,11 +47,11 @@ func assignRoutes(e *echo.Echo, cfg *config.ServerConfig) error {
 	if err != nil {
 		return err
 	}
-	
+
 	// Application
 	bdl := &application.ApplicationBundle{
-		ServerConfig:             cfg,
-		Repository:               ri,
+		ServerConfig: cfg,
+		Repository:   ri,
 	}
 	app := application.NewApplication(bdl)
 

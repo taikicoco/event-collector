@@ -3,12 +3,12 @@ package admin
 import (
 	"context"
 	"server/api/application"
-	
+
 	"github.com/labstack/echo/v4"
 )
 
 type AdminHandler struct {
-	Application     application.ApplicationInterface
+	Application application.ApplicationInterface
 }
 
 type ErrorResponse struct {
@@ -19,7 +19,7 @@ func NewHandler(
 	app application.ApplicationInterface,
 ) *AdminHandler {
 	return &AdminHandler{
-		Application:     app,
+		Application: app,
 	}
 }
 

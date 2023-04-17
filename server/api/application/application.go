@@ -10,8 +10,8 @@ type application struct {
 }
 
 type ApplicationBundle struct {
-	Repository               persistence.RepositoryInterface
-	ServerConfig         	*config.ServerConfig
+	Repository   persistence.RepositoryInterface
+	ServerConfig *config.ServerConfig
 }
 
 type ApplicationInterface interface {

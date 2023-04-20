@@ -6,4 +6,5 @@ RUN apk update
 RUN apk upgrade
 RUN apk add --update figlet
 RUN apk add build-base
+
 RUN go install github.com/cespare/reflex@latest

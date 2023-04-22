@@ -1,19 +1,18 @@
 package config
 
-import ()
-
-const (
-	Production  = "production"
-	Staging     = "staging"
-	Development = "development"
+import (
+	"github.com/caarlos0/env"
 )
 
 type ServerConfig struct {
-	Environment       string `json:"ENV,omitempty" env:"ENV,required"`
-	Port              string `json:"PORT,omitempty" env:"PORT,required"`
-	DriverName        string `json:"DRIVER,omitempty" env:"DRIVER,required"`
-	DataSource        string `json:"DATASOURCE,omitempty" env:"DATASOURCE,required"`
-	CognitoUserPoolID string `json:"CognitoUserPoolID,omitempty" env:"CognitoUserPoolID,required"`
-	CognitoClientID   string `json:"CognitoClientID,omitempty" env:"CognitoClientID,required"`
-	BucketName        string `json:"BucketName,omitempty" env:"BucketName,required"`
+	Environment string `env:"ENV,required"`
+	Port        string `env:"PORT,required"`
+}
+
+func LoadEnvConfig() (*ServerConfig, error) {
+	var cfg ServerConfig
+	if err := env.Parse(&cfg); err != nil {
+		return nil, err
+	}
+	return &cfg, nil
 }

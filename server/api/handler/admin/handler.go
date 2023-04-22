@@ -1,38 +1,18 @@
 package admin
 
 import (
-	"context"
-	"server/api/application"
-
 	"github.com/labstack/echo/v4"
+	"net/http"
 )
 
-type AdminHandler struct {
-	Application application.ApplicationInterface
-}
-
-type ErrorResponse struct {
-	Errors []string `json:"errors"`
-}
-
-func NewHandler(
-	app application.ApplicationInterface,
-) *AdminHandler {
-	return &AdminHandler{
-		Application: app,
+func AssignRoutes(e *echo.Echo) error {
+	ag := e.Group("/admin")
+	{
+		ag.GET("/logs", getLogs)
 	}
+	return nil
 }
 
-func (ah *AdminHandler) AssignRoutes(e *echo.Echo) {
-	// v1g := e.Group("v1")
-	// {
-	// 	v1ag := v1g.Group("/admin")
-	// 	{
-
-	// 	}
-	// }
-}
-
-func (ah *AdminHandler) GetCtx(ec echo.Context) context.Context {
-	return ec.Request().Context()
+func getLogs(e echo.Context) error {
+	return e.JSON(http.StatusOK, "getLogs")
 }

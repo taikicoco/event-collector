@@ -1,1 +1,1 @@
-# Go API
+# GoLogCollector

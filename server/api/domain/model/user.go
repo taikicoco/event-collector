@@ -6,10 +6,12 @@ import (
 	"gorm.io/gorm"
 )
 
-type Layout struct {
+type Users struct {
 	ID        uint           `json:"id" gorm:"primaryKey"`
-	LogKey    string         `json:"log_key"`
-	LogValue  string         `json:"log_value"`
+	UserID    string         `json:"userId"`
+	Pawssword string         `json:"password"`
+	Comment   string         `json:"comment"`
+	Nickname  string         `json:"nickname"`
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"deletedAt"`

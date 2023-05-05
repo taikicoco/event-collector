@@ -12,5 +12,4 @@ mysql:
 	docker compose exec mysql mysql -uroot -ppasswordroot -Ddb
 
 migrate-up:
-	docker-compose exec -T backend sh ./scripts/migrate-up.sh
-
+	docker-compose exec -T backend-go-api sh ./scripts/migrate-up.sh

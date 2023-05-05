@@ -25,7 +25,6 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-
 	if err = handler.AssignRoutes(e); err != nil {
 		panic(err)
 	}

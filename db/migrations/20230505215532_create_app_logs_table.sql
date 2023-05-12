@@ -1,14 +1,15 @@
 -- +goose Up
 -- +goose StatementBegin
 
-CREATE TABLE app_logs (
-    id BIGINT UNSIGNED AUTO_INCREMENT,
-    log_key VARCHAR(300),
-    log_value VARCHAR(3000),
+CREATE TABLE users (
+    user_id VARCHAR(255),
+    password VARCHAR(255),
+    nickname VARCHAR(255) null,
+    comment VARCHAR(255) null,
     created_at TIMESTAMP,
     updated_at TIMESTAMP null,
     deleted_at TIMESTAMP null,
-    PRIMARY KEY(id)
+    PRIMARY KEY(user_id)
 );
 
 -- +goose StatementEnd

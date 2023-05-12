@@ -8,3 +8,4 @@ RUN apk add --update figlet
 RUN apk add build-base
 
 RUN go install github.com/cespare/reflex@latest
+RUN go install github.com/pressly/goose/v3/cmd/goose@latest

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	admin_handler "server/api/handler/admin"
+	"server/api/handler"
 
 	"server/config"
 
@@ -25,7 +25,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	if err = admin_handler.AssignRoutes(e); err != nil {
+	if err = handler.AssignRoutes(e); err != nil {
 		panic(err)
 	}
 	fmt.Println(cfg.Port, "port")

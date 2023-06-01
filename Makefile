@@ -13,3 +13,6 @@ mysql:
 
 migrate-up:
 	docker-compose exec -T backend-go-api sh ./scripts/migrate-up.sh
+
+migrate-down:
+	docker-compose exec -T backend-go-api sh ./scripts/migrate-down.sh

@@ -1,7 +1,9 @@
 add-network:
-	docker network create go-log-collector
+	docker network create glc_network
 build:
 	docker-compose build
+build-nc:
+	docker-compose build --no-cache
 up:
 	docker-compose up
 down:

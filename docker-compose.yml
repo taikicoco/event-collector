@@ -22,7 +22,7 @@ services:
     depends_on:
       - mysql
     networks:
-      - go-api
+      - glc_network
 
 
   mysql:
@@ -41,7 +41,7 @@ services:
       - "mysql-db:/var/lib/mysql"
       - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
     networks:
-      - go-api
+      - glc_network
 
   setup:
     container_name: setup
@@ -56,5 +56,5 @@ volumes:
     driver: local
 
 networks:
-  go-api:
+  glc_network:
     external: true

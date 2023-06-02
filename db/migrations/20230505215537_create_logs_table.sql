@@ -1,9 +1,11 @@
 -- +goose Up
 -- +goose StatementBegin
 
-CREATE TABLE logs (
+CREATE TABLE access_logs (
     id BIGINT UNSIGNED AUTO_INCREMENT,
-    log INTEGER,
+    access_log_detail_id BIGINT UNSIGNED,
+    access INTEGER,
+    conversion INTEGER,
     created_at TIMESTAMP null,
     updated_at TIMESTAMP null,
     PRIMARY KEY(id)
@@ -13,5 +15,5 @@ CREATE TABLE logs (
 
 -- +goose Down
 -- +goose StatementBegin
-SELECT 'drop SQL query';
+SELECT 'drop table access_logs';
 -- +goose StatementEnd

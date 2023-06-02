@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	"time"
+	"server/api/domain/model"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/driver/mysql"
@@ -10,44 +10,47 @@ import (
 )
 
 func AssignRoutes(e *echo.Echo) error {
-
-	e.POST("/singup", singup)
-	e.GET("/users:userId", getUser)
-	e.PATCH("/users:userId", updateUser)
-	e.POST("/close", deleteUser)
-
+	e.GET("/log", getData)
+	e.POST("/log", createData)
 	return nil
 }
 
-type User struct {
-	UserID   string `json:"user_id"`
-	Password string `json:"password"`
-
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+type Log struct {
+	Log uint `json:"log"`
 }
 
-func singup(e echo.Context) error {
-	u := new(User)
-	if err := e.Bind(u); err != nil {
+func getData(e echo.Context) error {
+
+	db := dbInit()
+
+	var log model.Log
+
+	l := db.First(&log, 1)
+
+	err := l.Error
+	if err != nil {
+		return err
+	}
+	return e.JSON(http.StatusOK, log)
+	// return e.JSON(http.StatusOK, "data")
+}
+
+func createData(e echo.Context) error {
+	log := new(Log)
+	log.Log = 1
+
+	if err := e.Bind(log); err != nil {
 		return err
 	}
 
 	db := dbInit()
-	user := db.Create(u)
-	return e.JSON(http.StatusOK, user)
-}
 
-func getUser(e echo.Context) error {
-	return e.JSON(http.StatusOK, "getUsers")
-}
-
-func updateUser(e echo.Context) error {
-	return e.JSON(http.StatusOK, "updateUser")
-}
-
-func deleteUser(e echo.Context) error {
-	return e.JSON(http.StatusOK, "deleteUser")
+	l := db.Create(log)
+	err := l.Error
+	if err != nil {
+		return err
+	}
+	return e.JSON(http.StatusOK, log)
 }
 
 func dbInit() *gorm.DB {

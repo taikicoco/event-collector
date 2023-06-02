@@ -1,5 +1,5 @@
 add-network:
-	docker network create go-api
+	docker network create go-log-collector
 build:
 	docker-compose build
 up:
@@ -7,12 +7,10 @@ up:
 down:
 	docker-compose down
 sh:
-	docker-compose exec backend-go-api sh
+	docker-compose exec go-log-collector sh
 mysql:
 	docker compose exec mysql mysql -uroot -ppasswordroot -Ddb
-
 migrate-up:
-	docker-compose exec -T backend-go-api sh ./scripts/migrate-up.sh
-
+	docker-compose exec -T go-log-collector sh ./scripts/migrate-up.sh
 migrate-down:
-	docker-compose exec -T backend-go-api sh ./scripts/migrate-down.sh
+	docker-compose exec -T go-log-collector sh ./scripts/migrate-down.sh

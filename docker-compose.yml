@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  backend-go-api:
-    container_name: backend-go-api
+  go-log-collector:
+    container_name: go-log-collector
     build:
       context: .
       dockerfile: docker/go/Dockerfile
@@ -43,9 +43,8 @@ services:
     networks:
       - go-api
 
-  go-api-setup:
-
-    container_name: go-api-setup
+  setup:
+    container_name: setup
     image: alpine:latest
     volumes:
       - .:/app

@@ -15,4 +15,5 @@ jobs:
     - name: Set up Go
       run: |
         make add-network
+        make build
         make up

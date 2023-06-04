@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type AccessLog struct {
+type Log struct {
 	ID                uint      `json:"id" gorm:"primaryKey"`
 	AccessLogDetailID uint      `json:"access_log_detail_id"`
 	Access            uint      `json:"access"`

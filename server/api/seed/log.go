@@ -21,7 +21,7 @@ func LogSeed(db *gorm.DB) error {
 
 	Log := model.Log{
 		LogDetailID: 1,
-		Access:            10, Conversion: 2,
+		Access:      10, Conversion: 2,
 		CreatedAt: time.Now(), UpdatedAt: time.Now()}
 
 	if err := db.Create(&Log).Error; err != nil {

@@ -8,26 +8,26 @@ import (
 	"gorm.io/gorm"
 )
 
-func AccessLogSeed(db *gorm.DB) error {
+func LogSeed(db *gorm.DB) error {
 
 	var recodeCount int64
-	db.Table("access_logs").Count(&recodeCount)
+	db.Table("logs").Count(&recodeCount)
 	fmt.Println(recodeCount)
 
 	if recodeCount > 0 {
-		fmt.Println("AccessLogSeed Skip")
+		fmt.Println("LogSeed Skip")
 		return nil
 	}
 
-	accessLog := model.AccessLog{
-		AccessLogDetailID: 1,
+	Log := model.Log{
+		LogDetailID: 1,
 		Access:            10, Conversion: 2,
 		CreatedAt: time.Now(), UpdatedAt: time.Now()}
 
-	if err := db.Create(&accessLog).Error; err != nil {
+	if err := db.Create(&Log).Error; err != nil {
 		fmt.Printf("%+v", err)
 	}
 
-	fmt.Println("AccessLogSeed done")
+	fmt.Println("LogSeed done")
 	return nil
 }

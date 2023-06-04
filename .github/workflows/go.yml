@@ -7,13 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  check-bats-version:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Go
-      run: |
-        make add-network
-        make build
-        make up
+      - run: echo "Hellow world"

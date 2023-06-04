@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
 
-CREATE TABLE access_log_details (
+CREATE TABLE log_details (
     id BIGINT UNSIGNED AUTO_INCREMENT,
     name VARCHAR(255),
     version INTEGER,
@@ -14,5 +14,5 @@ CREATE TABLE access_log_details (
 
 -- +goose Down
 -- +goose StatementBegin
-SELECT 'drop table access_log_details';
+SELECT 'drop table log_details';
 -- +goose StatementEnd

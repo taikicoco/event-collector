@@ -5,16 +5,13 @@ import (
 	"server/api/domain/model"
 
 	"github.com/labstack/echo/v4"
-
 )
-
 
 type createLogRequest struct {
 	LogDetailID uint `json:"id" param:"id"`
 	Access      uint `json:"access"`
 	Conversion  uint `json:"conversion"`
 }
-
 
 func CreateLog(e echo.Context) error {
 	var rl createLogRequest

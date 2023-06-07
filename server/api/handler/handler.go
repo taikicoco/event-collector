@@ -7,9 +7,27 @@ import (
 )
 
 func AssignRoutes(e *echo.Echo) {
-	e.POST("/log/detail", CreateLogDetail)
-	e.GET("/log/detail/:id", GetLogDetail)
-	e.POST("/log/:id", CreateLog)
+	v1g := e.Group("/v1")
+	{
+		v1wl := v1g.Group("/weblog")
+		{
+			// GET
+			v1wl.GET("", GetWebLogs)
+			v1wl.GET("/:id", GetWebLog)
+
+			// POST
+			v1wl.POST("", CreateWebLog)
+
+			// PUT
+			v1wl.PUT("/:id", UpdateWebLog)
+
+			v1wld := v1wl.Group("/data")
+			{
+				// POST
+				v1wld.PUT("/:id", UpdateWebLogData)
+			}
+		}
+	}
 }
 
 func GetCtx(ec echo.Context) context.Context {

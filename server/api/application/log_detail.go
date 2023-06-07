@@ -1,57 +1,44 @@
 package application
 
 import (
-	"net/http"
+	"context"
 	"server/api/domain/model"
-
-	"github.com/labstack/echo/v4"
 )
 
-type createLogDetailRequest struct {
+type CreateLogDetailRequest struct {
 	Name    string `json:"name"`
 	Version uint   `json:"version"`
 	PageUrl string `json:"page_url"`
 }
 
-type getLogDetailRequest struct {
+type GetLogDetailRequest struct {
 	ID uint `json:"id" param:"id"`
 }
 
-func CreateLogDetail(e echo.Context) error {
-	var r createLogDetailRequest
-	if err := e.Bind(&r); err != nil {
-		return err
-	}
-
-	logDetail := model.LogDetail{
-		Name:    r.Name,
-		Version: r.Version,
-		PageUrl: r.PageUrl,
+func CreateLogDetail(ctx context.Context, req *CreateLogDetailRequest) (*model.LogDetail,error) {
+	logDetail := &model.LogDetail{
+		Name:    req.Name,
+		Version: req.Version,
+		PageUrl: req.PageUrl,
 	}
 
 	db := dbInit()
-	l := db.Create(&logDetail)
+	l := db.Create(logDetail)
 	err := l.Error
 	if err != nil {
-		return err
+		return nil,err
 	}
-	return e.JSON(http.StatusOK, logDetail)
+	return  logDetail, nil
 }
 
-func GetLogDetail(e echo.Context) error {
-
-	var r getLogDetailRequest
-	if err := e.Bind(&r); err != nil {
-		return err
-	}
-
+func GetLogDetail(ctx context.Context, id uint) (*model.LogDetail, error) {
 	db := dbInit()
 
-	var logDetail model.LogDetail
-	l := db.First(&logDetail, r.ID)
+	var logDetail *model.LogDetail
+	l := db.First(&logDetail, id)
 	err := l.Error
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return e.JSON(http.StatusOK, logDetail)
+	return logDetail, nil
 }

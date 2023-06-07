@@ -15,7 +15,7 @@ func NewLogRepository() LogRepository {
 	return &logRepository{}
 }
 
-func(lr *logRepository) Create(ctx context.Context, log *model.Log) (*model.Log, error) {
+func (lr *logRepository) Create(ctx context.Context, log *model.Log) (*model.Log, error) {
 	db := dbInit()
 	l := db.Create(log)
 	err := l.Error
@@ -24,4 +24,3 @@ func(lr *logRepository) Create(ctx context.Context, log *model.Log) (*model.Log,
 	}
 	return log, nil
 }
-	

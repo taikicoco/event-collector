@@ -3,6 +3,7 @@ package application
 import (
 	"context"
 	"server/api/domain/model"
+	"server/api/repository"
 )
 
 type CreateLogDetailRequest struct {
@@ -21,24 +22,11 @@ func CreateLogDetail(ctx context.Context, req *CreateLogDetailRequest) (*model.L
 		Version: req.Version,
 		PageUrl: req.PageUrl,
 	}
-
-	db := dbInit()
-	l := db.Create(logDetail)
-	err := l.Error
-	if err != nil {
-		return nil, err
-	}
-	return logDetail, nil
+	ldr := repository.NewLogDetailRepository()
+	return ldr.Create(ctx, logDetail)
 }
 
 func GetLogDetail(ctx context.Context, id uint) (*model.LogDetail, error) {
-	db := dbInit()
-
-	var logDetail *model.LogDetail
-	l := db.First(&logDetail, id)
-	err := l.Error
-	if err != nil {
-		return nil, err
-	}
-	return logDetail, nil
+	ldr := repository.NewLogDetailRepository()
+	return ldr.Get(ctx, id)
 }

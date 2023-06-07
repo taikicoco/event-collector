@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 	"server/api/application"
-	
+
 	"github.com/labstack/echo/v4"
 )
 

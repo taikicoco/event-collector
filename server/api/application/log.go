@@ -3,6 +3,7 @@ package application
 import (
 	"context"
 	"server/api/domain/model"
+	"server/api/repository"
 )
 
 type CreateLogRequest struct {
@@ -12,18 +13,12 @@ type CreateLogRequest struct {
 }
 
 func CreateLog(ctx context.Context, req *CreateLogRequest) (*model.Log, error) {
-
 	log := &model.Log{
 		LogDetailID: req.LogDetailID,
 		Access:      req.Access,
 		Conversion:  req.Conversion,
 	}
 
-	db := dbInit()
-	l := db.Create(log)
-	err := l.Error
-	if err != nil {
-		return nil, err
-	}
-	return log, nil
+	lr := repository.NewLogRepository()
+	return lr.Create(ctx, log)
 }

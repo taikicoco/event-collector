@@ -15,7 +15,7 @@ type GetLogDetailRequest struct {
 	ID uint `json:"id" param:"id"`
 }
 
-func CreateLogDetail(ctx context.Context, req *CreateLogDetailRequest) (*model.LogDetail,error) {
+func CreateLogDetail(ctx context.Context, req *CreateLogDetailRequest) (*model.LogDetail, error) {
 	logDetail := &model.LogDetail{
 		Name:    req.Name,
 		Version: req.Version,
@@ -26,9 +26,9 @@ func CreateLogDetail(ctx context.Context, req *CreateLogDetailRequest) (*model.L
 	l := db.Create(logDetail)
 	err := l.Error
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
-	return  logDetail, nil
+	return logDetail, nil
 }
 
 func GetLogDetail(ctx context.Context, id uint) (*model.LogDetail, error) {

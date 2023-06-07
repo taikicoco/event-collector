@@ -1,9 +1,9 @@
 package handler
 
 import (
+	"github.com/labstack/echo/v4"
 	"net/http"
 	"server/api/application"
-	"github.com/labstack/echo/v4"
 )
 
 func CreateLogDetail(e echo.Context) error {

@@ -12,7 +12,7 @@ type CreateLogRequest struct {
 }
 
 func CreateLog(ctx context.Context, req *CreateLogRequest) (*model.Log, error) {
-	
+
 	log := &model.Log{
 		LogDetailID: req.LogDetailID,
 		Access:      req.Access,

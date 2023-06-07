@@ -28,9 +28,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	if err = handler.AssignRoutes(e); err != nil {
-		panic(err)
-	}
+	handler.AssignRoutes(e)
 
 	fmt.Println(cfg.Port, "port")
 	if err = e.Start(fmt.Sprintf(":%s", cfg.Port)); err != nil {

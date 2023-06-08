@@ -1,18 +1,19 @@
 -- +goose Up
 -- +goose StatementBegin
 
-CREATE TABLE log_details (
+CREATE TABLE web_log_data (
     id BIGINT UNSIGNED AUTO_INCREMENT,
-    name VARCHAR(255),
-    version INTEGER,
-    page_url VARCHAR(255),
+    web_log_id BIGINT UNSIGNED,
+    access INTEGER,
+    conversion INTEGER,
     created_at TIMESTAMP null,
     updated_at TIMESTAMP null,
     PRIMARY KEY(id)
 );
+
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-SELECT 'drop table log_details';
+SELECT 'drop table web_log_data';
 -- +goose StatementEnd

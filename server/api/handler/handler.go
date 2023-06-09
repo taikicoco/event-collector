@@ -9,7 +9,7 @@ import (
 func AssignRoutes(e *echo.Echo) {
 	v1g := e.Group("/v1")
 	{
-		v1wl := v1g.Group("/weblog")
+		v1wl := v1g.Group("/web_log")
 		{
 			// GET
 			v1wl.GET("", GetWebLogs)

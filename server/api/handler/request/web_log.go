@@ -4,7 +4,7 @@ type GetWebLogsRequest struct {
 }
 
 type GetWebLogRequest struct {
-	ID uint `json:"id"`
+	ID uint `param:"id"`
 }
 
 type CreateWebLogRequest struct {
@@ -14,7 +14,7 @@ type CreateWebLogRequest struct {
 }
 
 type UpdateWebLogRequest struct {
-	ID      uint   `json:"id"`
+	ID      uint   `param:"id"`
 	Name    string `json:"name"`
 	Version uint   `json:"version"`
 	PageUrl string `json:"page_url"`

@@ -51,11 +51,11 @@ func (wlr *webLogRepository) FindAll(ctx context.Context) ([]*model.WebLog, erro
 
 func (wlr *webLogRepository) FindByID(ctx context.Context, id uint) (*model.WebLog, error) {
 	db := dbInit()
-	webLog := &model.WebLog{}
+	var webLog model.WebLog
 	wld := db.First(&webLog, id)
 	err := wld.Error
 	if err != nil {
 		return nil, err
 	}
-	return webLog, nil
+	return &webLog, nil
 }

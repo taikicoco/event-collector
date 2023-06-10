@@ -18,11 +18,11 @@ func dbInit() *gorm.DB {
 func Seed() {
 	db := dbInit()
 
-	if err := LogSeed(db); err != nil {
+	if err := WebLogSeed(db); err != nil {
 		fmt.Printf("%+v", err)
 	}
 
-	if err := LogDetailSeed(db); err != nil {
+	if err := WebLogDataSeed(db); err != nil {
 		fmt.Printf("%+v", err)
 	}
 

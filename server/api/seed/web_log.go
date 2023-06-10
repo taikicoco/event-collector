@@ -8,24 +8,24 @@ import (
 	"gorm.io/gorm"
 )
 
-func LogDetailSeed(db *gorm.DB) error {
+func WebLogSeed(db *gorm.DB) error {
 	var recodeCount int64
-	db.Table("log_details").Count(&recodeCount)
-	fmt.Println(recodeCount)
+	db.Table("web_logs").Count(&recodeCount)
+	fmt.Println("web_log recode = ", recodeCount)
 
 	if recodeCount > 0 {
-		fmt.Println("LogDetailSeed Skip")
+		fmt.Println("WebLogSeed Skip")
 		return nil
 	}
 
-	Log := model.LogDetail{
+	WebLog := model.WebLog{
 		Name: "detail_name", Version: 1, PageUrl: "www.exsampl.com",
 		CreatedAt: time.Now(), UpdatedAt: time.Now()}
 
-	if err := db.Create(&Log).Error; err != nil {
+	if err := db.Create(&WebLog).Error; err != nil {
 		fmt.Printf("%+v", err)
 	}
 
-	fmt.Println("LogSeedDetail done")
+	fmt.Println("WebLogSeed done")
 	return nil
 }

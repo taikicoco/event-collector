@@ -18,7 +18,7 @@ func NewWebLogDataHandler() WebLogDataHandlerInterface {
 	return &webLogDataHandler{}
 }
 
-func(wldh *webLogDataHandler) UpdateWebLogData(e echo.Context) error {
+func (wldh *webLogDataHandler) UpdateWebLogData(e echo.Context) error {
 	var req request.UpdateWebLogDataRequest
 	if err := e.Bind(&req); err != nil {
 		return err

@@ -23,7 +23,7 @@ func NewWebLogApplication() WebLogApplicationInterface {
 	return &webLogApplication{}
 }
 
-func(wa *webLogApplication) UpdateWebLogData(ctx context.Context, req *UpdateWebLogDataRequest) (*model.WebLogData, error) {
+func (wa *webLogApplication) UpdateWebLogData(ctx context.Context, req *UpdateWebLogDataRequest) (*model.WebLogData, error) {
 	webLogData := &model.WebLogData{
 		ID:         req.ID,
 		WebLogID:   req.WebLogID,

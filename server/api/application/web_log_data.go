@@ -13,17 +13,17 @@ type UpdateWebLogDataRequest struct {
 	Conversion uint `json:"conversion"`
 }
 
-type WebLogApplicationInterface interface {
+type WebLogDataApplicationInterface interface {
 	UpdateWebLogData(context.Context, *UpdateWebLogDataRequest) (*model.WebLogData, error)
 }
 
-type webLogApplication struct{}
+type webLogDataApplication struct{}
 
-func NewWebLogApplication() WebLogApplicationInterface {
-	return &webLogApplication{}
+func NewWebLogDataApplication() WebLogDataApplicationInterface {
+	return &webLogDataApplication{}
 }
 
-func (wa *webLogApplication) UpdateWebLogData(ctx context.Context, req *UpdateWebLogDataRequest) (*model.WebLogData, error) {
+func (wlda *webLogDataApplication) UpdateWebLogData(ctx context.Context, req *UpdateWebLogDataRequest) (*model.WebLogData, error) {
 	webLogData := &model.WebLogData{
 		ID:         req.ID,
 		WebLogID:   req.WebLogID,

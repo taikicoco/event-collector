@@ -23,17 +23,30 @@ type UpdateWebLogRequest struct {
 	PageUrl string `json:"page_url"`
 }
 
-func GetWebLogs(ctx context.Context) ([]*model.WebLog, error) {
+type WebLogApplicationInterface interface {
+	GetWebLogs(context.Context) ([]*model.WebLog, error)
+	GetWebLog(context.Context, uint) (*model.WebLog, error)
+	CreateWebLog(context.Context, *CreateWebLogRequest) (*model.WebLog, error)
+	UpdateWebLog(context.Context, *UpdateWebLogRequest) (*model.WebLog, error)
+}
+
+type webLogApplication struct{}
+
+func NewWebLogApplication() WebLogApplicationInterface {
+	return &webLogApplication{}
+}
+
+func (wla *webLogApplication) GetWebLogs(ctx context.Context) ([]*model.WebLog, error) {
 	wlr := repository.NewWebLogRepository()
 	return wlr.FindAll(ctx)
 }
 
-func GetWebLog(ctx context.Context, id uint) (*model.WebLog, error) {
+func (wla *webLogApplication) GetWebLog(ctx context.Context, id uint) (*model.WebLog, error) {
 	wlr := repository.NewWebLogRepository()
 	return wlr.FindByID(ctx, id)
 }
 
-func CreateWebLog(ctx context.Context, req *CreateWebLogRequest) (*model.WebLog, error) {
+func (wla *webLogApplication) CreateWebLog(ctx context.Context, req *CreateWebLogRequest) (*model.WebLog, error) {
 	webLog := &model.WebLog{
 		Name:    req.Name,
 		Version: req.Version,
@@ -44,7 +57,7 @@ func CreateWebLog(ctx context.Context, req *CreateWebLogRequest) (*model.WebLog,
 	return wlr.Create(ctx, webLog)
 }
 
-func UpdateWebLog(ctx context.Context, req *UpdateWebLogRequest) (*model.WebLog, error) {
+func (wla *webLogApplication) UpdateWebLog(ctx context.Context, req *UpdateWebLogRequest) (*model.WebLog, error) {
 	webLog := &model.WebLog{
 		ID:      req.ID,
 		Name:    req.Name,

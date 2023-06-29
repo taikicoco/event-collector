@@ -8,7 +8,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func UpdateWebLogData(e echo.Context) error {
+type WebLogDataHandlerInterface interface {
+	UpdateWebLogData(echo.Context) error
+}
+
+type webLogDataHandler struct{}
+
+func NewWebLogDataHandler() WebLogDataHandlerInterface {
+	return &webLogDataHandler{}
+}
+
+func (wldh *webLogDataHandler) UpdateWebLogData(e echo.Context) error {
 	var req request.UpdateWebLogDataRequest
 	if err := e.Bind(&req); err != nil {
 		return err

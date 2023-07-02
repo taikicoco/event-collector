@@ -23,43 +23,16 @@ func main() {
 	}
 
 	// seeder
-	seed_init(cfg)
-
-	webLogRepo := infrastructure.NewWebLogRepository(config.NewDB())
-	webLogApp := application.NewWebLogApplication(webLogRepo)
-	webLogHandler := handler.NewWebLogHandler(webLogApp)
-
-	webLogDataRepo := infrastructure.NewWebLogDataRepository(config.NewDB())
-	webLogDataApp := application.NewWebLogDataApplication(webLogDataRepo)
-	webLogDataHandler := handler.NewWebLogDataHandler(webLogDataApp)
+	seedInit(cfg)
 
 	// echo instance
 	e := echo.New()
 	// middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	// routing
-	v1g := e.Group("/v1")
-	{
-		v1wl := v1g.Group("/web_log")
-		{
-			// GET
-			v1wl.GET("", webLogHandler.GetWebLogs)
-			v1wl.GET("/:id", webLogHandler.GetWebLog)
-
-			// POST
-			v1wl.POST("", webLogHandler.CreateWebLog)
-
-			// PUT
-			v1wl.PUT("/:id", webLogHandler.UpdateWebLog)
-
-			v1wld := v1wl.Group("/data")
-			{
-				// POST
-				v1wld.PUT("/:id", webLogDataHandler.UpdateWebLogData)
-			}
-		}
-	}
+	
+	handlers := initHandlers()
+	handler.SetupRoutes(e, handlers)
 
 	fmt.Println(cfg.Port, "port")
 	if err = e.Start(fmt.Sprintf(":%s", cfg.Port)); err != nil {
@@ -67,8 +40,23 @@ func main() {
 	}
 }
 
-func seed_init(cfg *config.ServerConfig) {
+func seedInit(cfg *config.ServerConfig) {
 	if cfg.Environment == "development" {
 		seed.Seed()
+	}
+}
+
+func initHandlers() *handler.Handlers {
+	webLogRepo := infrastructure.NewWebLogRepository(config.NewDB())
+	webLogApp := application.NewWebLogApplication(webLogRepo)
+	webLogHandler := handler.NewWebLogHandler(webLogApp)
+
+	webLogDataRepo := infrastructure.NewWebLogDataRepository(config.NewDB())
+	webLogDataApp := application.NewWebLogDataApplication(webLogDataRepo)
+	webLogDataHandler := handler.NewWebLogDataHandler(webLogDataApp)
+	
+	return &handler.Handlers{
+		WebLogHandler:     webLogHandler,
+		WebLogDataHandler: webLogDataHandler,
 	}
 }

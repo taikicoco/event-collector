@@ -8,38 +8,53 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func GetWebLogs(e echo.Context) error {
+type WebLogHandlerInterface interface {
+	GetWebLogs(echo.Context) error
+	GetWebLog(echo.Context) error
+	CreateWebLog(echo.Context) error
+	UpdateWebLog(echo.Context) error
+}
+
+type webLogHandler struct {
+	webLogApp application.WebLogApplicationInterface
+}
+
+func NewWebLogHandler(webLogApp application.WebLogApplicationInterface) WebLogHandlerInterface {
+	return &webLogHandler{webLogApp: webLogApp}
+}
+
+func (wlh webLogHandler) GetWebLogs(e echo.Context) error {
 	ctx := GetCtx(e)
 
-	res, err := application.GetWebLogs(ctx)
+	res, err := wlh.webLogApp.GetWebLogs(ctx)
 	if err != nil {
 		return err
 	}
 	return e.JSON(http.StatusOK, res)
 }
 
-func GetWebLog(e echo.Context) error {
+func (wlh webLogHandler) GetWebLog(e echo.Context) error {
 	var req request.GetWebLogRequest
 	if err := e.Bind(&req); err != nil {
 		return err
 	}
 
 	ctx := GetCtx(e)
-	res, err := application.GetWebLog(ctx, req.ID)
+	res, err := wlh.webLogApp.GetWebLog(ctx, req.ID)
 	if err != nil {
 		return err
 	}
 	return e.JSON(http.StatusOK, res)
 }
 
-func CreateWebLog(e echo.Context) error {
+func (wlh webLogHandler) CreateWebLog(e echo.Context) error {
 	var req request.CreateWebLogRequest
 	if err := e.Bind(&req); err != nil {
 		return err
 	}
 
 	ctx := GetCtx(e)
-	res, err := application.CreateWebLog(ctx, &application.CreateWebLogRequest{
+	res, err := wlh.webLogApp.CreateWebLog(ctx, &application.CreateWebLogRequest{
 		Name:    req.Name,
 		Version: req.Version,
 		PageUrl: req.PageUrl,
@@ -50,14 +65,14 @@ func CreateWebLog(e echo.Context) error {
 	return e.JSON(http.StatusOK, res)
 }
 
-func UpdateWebLog(e echo.Context) error {
+func (wlh webLogHandler) UpdateWebLog(e echo.Context) error {
 	var req request.UpdateWebLogRequest
 	if err := e.Bind(&req); err != nil {
 		return err
 	}
 
 	ctx := GetCtx(e)
-	res, err := application.UpdateWebLog(ctx, &application.UpdateWebLogRequest{
+	res, err := wlh.webLogApp.UpdateWebLog(ctx, &application.UpdateWebLogRequest{
 		ID:      req.ID,
 		Name:    req.Name,
 		Version: req.Version,

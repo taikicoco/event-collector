@@ -12,10 +12,12 @@ type WebLogDataHandlerInterface interface {
 	UpdateWebLogData(echo.Context) error
 }
 
-type webLogDataHandler struct{}
+type webLogDataHandler struct {
+	webLogDataApp application.WebLogDataApplicationInterface
+}
 
-func NewWebLogDataHandler() WebLogDataHandlerInterface {
-	return &webLogDataHandler{}
+func NewWebLogDataHandler(webLogDataApp application.WebLogDataApplicationInterface) WebLogDataHandlerInterface {
+	return &webLogDataHandler{webLogDataApp: webLogDataApp}
 }
 
 func (wldh *webLogDataHandler) UpdateWebLogData(e echo.Context) error {
@@ -25,7 +27,7 @@ func (wldh *webLogDataHandler) UpdateWebLogData(e echo.Context) error {
 	}
 
 	ctx := GetCtx(e)
-	res, err := application.UpdateWebLogData(ctx, &application.UpdateWebLogDataRequest{
+	res, err := wldh.webLogDataApp.UpdateWebLogData(ctx, &application.UpdateWebLogDataRequest{
 		ID:         req.ID,
 		WebLogID:   req.WebLogID,
 		Access:     req.Access,

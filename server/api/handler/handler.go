@@ -11,8 +11,8 @@ func GetCtx(ec echo.Context) context.Context {
 }
 
 type Handlers struct {
-	WebLogHandler      WebLogHandlerInterface
-	WebLogDataHandler  WebLogDataHandlerInterface
+	WebLogHandler     WebLogHandlerInterface
+	WebLogDataHandler WebLogDataHandlerInterface
 }
 
 func SetupRoutes(e *echo.Echo, handlers *Handlers) {

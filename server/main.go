@@ -30,7 +30,7 @@ func main() {
 	// middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	
+
 	handlers := initHandlers()
 	handler.SetupRoutes(e, handlers)
 
@@ -54,7 +54,7 @@ func initHandlers() *handler.Handlers {
 	webLogDataRepo := infrastructure.NewWebLogDataRepository(config.NewDB())
 	webLogDataApp := application.NewWebLogDataApplication(webLogDataRepo)
 	webLogDataHandler := handler.NewWebLogDataHandler(webLogDataApp)
-	
+
 	return &handler.Handlers{
 		WebLogHandler:     webLogHandler,
 		WebLogDataHandler: webLogDataHandler,

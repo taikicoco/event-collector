@@ -1,22 +1,21 @@
-package repository
+package infrastructure
 
 import (
-	"context"
+	"gorm.io/gorm"
 	"server/api/domain/model"
+	"server/api/domain/repository"
 )
 
-type WebLogDataRepositoryInterface interface {
-	Update(context.Context, *model.WebLogData) (*model.WebLogData, error)
+type webLogDataRepository struct {
+	Conn *gorm.DB
 }
 
-type webLogDataRepository struct{}
-
-func NewWebLogDataRepository() WebLogDataRepositoryInterface {
-	return &webLogDataRepository{}
+func NewWebLogDataRepository(conn *gorm.DB) repository.WebLogDataRepository {
+	return &webLogDataRepository{Conn: conn}
 }
 
-func (wldr *webLogDataRepository) Update(ctx context.Context, webLogData *model.WebLogData) (*model.WebLogData, error) {
-	db := dbInit()
+func (wldr *webLogDataRepository) Update(webLogData *model.WebLogData) (*model.WebLogData, error) {
+	db := repository.DBInit()
 	wld := db.Create(webLogData)
 	err := wld.Error
 	if err != nil {

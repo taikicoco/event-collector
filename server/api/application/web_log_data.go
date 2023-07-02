@@ -3,7 +3,7 @@ package application
 import (
 	"context"
 	"server/api/domain/model"
-	"server/api/repository"
+	"server/api/domain/repository"
 )
 
 type UpdateWebLogDataRequest struct {
@@ -17,10 +17,12 @@ type WebLogDataApplicationInterface interface {
 	UpdateWebLogData(context.Context, *UpdateWebLogDataRequest) (*model.WebLogData, error)
 }
 
-type webLogDataApplication struct{}
+type webLogDataApplication struct {
+	webLogDataRepo repository.WebLogDataRepository
+}
 
-func NewWebLogDataApplication() WebLogDataApplicationInterface {
-	return &webLogDataApplication{}
+func NewWebLogDataApplication(webLogDataRepo repository.WebLogDataRepository) WebLogDataApplicationInterface {
+	return &webLogDataApplication{webLogDataRepo: webLogDataRepo}
 }
 
 func (wlda *webLogDataApplication) UpdateWebLogData(ctx context.Context, req *UpdateWebLogDataRequest) (*model.WebLogData, error) {
@@ -30,6 +32,6 @@ func (wlda *webLogDataApplication) UpdateWebLogData(ctx context.Context, req *Up
 		Access:     req.Access,
 		Conversion: req.Conversion,
 	}
-	wldr := repository.NewWebLogDataRepository()
-	return wldr.Update(ctx, webLogData)
+	updateWebLogData, err := wlda.webLogDataRepo.Update(webLogData)
+	return updateWebLogData, err
 }

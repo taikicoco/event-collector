@@ -3,7 +3,7 @@ package application
 import (
 	"context"
 	"server/api/domain/model"
-	"server/api/repository"
+	"server/api/domain/repository"
 )
 
 type GetteWebLogRequest struct {
@@ -30,20 +30,20 @@ type WebLogApplicationInterface interface {
 	UpdateWebLog(context.Context, *UpdateWebLogRequest) (*model.WebLog, error)
 }
 
-type webLogApplication struct{}
+type webLogApplication struct {
+	webLogRepo repository.WebLogRepository
+}
 
-func NewWebLogApplication() WebLogApplicationInterface {
-	return &webLogApplication{}
+func NewWebLogApplication(webLogRepo repository.WebLogRepository) WebLogApplicationInterface {
+	return &webLogApplication{webLogRepo: webLogRepo}
 }
 
 func (wla *webLogApplication) GetWebLogs(ctx context.Context) ([]*model.WebLog, error) {
-	wlr := repository.NewWebLogRepository()
-	return wlr.FindAll(ctx)
+	return wla.webLogRepo.FindAll()
 }
 
 func (wla *webLogApplication) GetWebLog(ctx context.Context, id uint) (*model.WebLog, error) {
-	wlr := repository.NewWebLogRepository()
-	return wlr.FindByID(ctx, id)
+	return wla.webLogRepo.FindByID(id)
 }
 
 func (wla *webLogApplication) CreateWebLog(ctx context.Context, req *CreateWebLogRequest) (*model.WebLog, error) {
@@ -53,8 +53,11 @@ func (wla *webLogApplication) CreateWebLog(ctx context.Context, req *CreateWebLo
 		PageUrl: req.PageUrl,
 	}
 
-	wlr := repository.NewWebLogRepository()
-	return wlr.Create(ctx, webLog)
+	createWebLog, err := wla.webLogRepo.Create(webLog)
+	if err != nil {
+		return nil, err
+	}
+	return createWebLog, nil
 }
 
 func (wla *webLogApplication) UpdateWebLog(ctx context.Context, req *UpdateWebLogRequest) (*model.WebLog, error) {
@@ -64,6 +67,10 @@ func (wla *webLogApplication) UpdateWebLog(ctx context.Context, req *UpdateWebLo
 		Version: req.Version,
 		PageUrl: req.PageUrl,
 	}
-	wlr := repository.NewWebLogRepository()
-	return wlr.Update(ctx, webLog)
+
+	updateWebLog, err := wla.webLogRepo.Update(webLog)
+	if err != nil {
+		return nil, err
+	}
+	return updateWebLog, nil
 }

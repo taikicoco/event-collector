@@ -9,7 +9,7 @@ import (
 )
 
 type LogDetail struct {
-	db          *sqlx.DB
+	db            *sqlx.DB
 	logDetailRepo *repository.LogDetailRepository
 }
 

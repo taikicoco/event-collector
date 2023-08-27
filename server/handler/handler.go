@@ -12,13 +12,13 @@ func GetCtx(ec echo.Context) context.Context {
 }
 
 type Handler struct {
-	logName usecase.LogName
+	logName   usecase.LogName
 	logDetail usecase.LogDetail
 }
 
 func NewHandler(logName *usecase.LogName, logDetail *usecase.LogDetail) *Handler {
 	return &Handler{
-		logName: *logName,
+		logName:   *logName,
 		logDetail: *logDetail,
 	}
 }

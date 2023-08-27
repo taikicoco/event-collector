@@ -18,8 +18,6 @@ func main() {
 	logName := usecase.NewLogName(db)
 	logDetail := usecase.NewLogDetail(db)
 
-
-
 	handlers := handler.NewHandler(logName, logDetail)
 
 	e := echo.New()

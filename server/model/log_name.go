@@ -1,6 +1,6 @@
 package model
 
 type LogName struct {
-	ID   uint   `json:"id" db:"primaryKey"`
-	Name string `json:"name"`
+	ID   uint   `json:"id" db:"id"`
+	Name string `json:"name" db:"name"`
 }

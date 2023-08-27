@@ -14,7 +14,7 @@ func GetCtx(ec echo.Context) context.Context {
 type Handler struct {
 	logName   usecase.LogName
 	logDetail usecase.LogDetail
-	log 	 usecase.Log
+	log       usecase.Log
 }
 
 func NewHandler(logName *usecase.LogName, logDetail *usecase.LogDetail,
@@ -22,7 +22,7 @@ func NewHandler(logName *usecase.LogName, logDetail *usecase.LogDetail,
 	return &Handler{
 		logName:   *logName,
 		logDetail: *logDetail,
-		log : *log,
+		log:       *log,
 	}
 }
 

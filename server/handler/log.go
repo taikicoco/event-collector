@@ -20,7 +20,7 @@ func (h *Handler) CreateLog(e echo.Context) error {
 	}
 
 	res := response.CreateLogResponse{
-		ID: log.ID,
+		ID:          log.ID,
 		LogDetailID: log.LogDetailID,
 	}
 	return e.JSON(200, res)

@@ -16,7 +16,11 @@ func main() {
 	}
 
 	logName := usecase.NewLogName(db)
-	handlers := handler.NewHandler(logName)
+	logDetail := usecase.NewLogDetail(db)
+
+
+
+	handlers := handler.NewHandler(logName, logDetail)
 
 	e := echo.New()
 	handler.SetupRoutes(e, handlers)

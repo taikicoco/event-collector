@@ -13,11 +13,13 @@ func GetCtx(ec echo.Context) context.Context {
 
 type Handler struct {
 	logName usecase.LogName
+	logDetail usecase.LogDetail
 }
 
-func NewHandler(logName *usecase.LogName) *Handler {
+func NewHandler(logName *usecase.LogName, logDetail *usecase.LogDetail) *Handler {
 	return &Handler{
 		logName: *logName,
+		logDetail: *logDetail,
 	}
 }
 
@@ -30,6 +32,7 @@ func SetupRoutes(e *echo.Echo, h *Handler) {
 			{
 				v1ln.GET("/:id", h.GetLogName)
 			}
+			v1l.GET("/:id", h.GetLogDetail)
 		}
 	}
 }

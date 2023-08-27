@@ -17,9 +17,9 @@ func main() {
 
 	logName := usecase.NewLogName(db)
 	logDetail := usecase.NewLogDetail(db)
+	log := usecase.NewLog(db)
 
-	handlers := handler.NewHandler(logName, logDetail)
-
+	handlers := handler.NewHandler(logName, logDetail, log)
 	e := echo.New()
 	handler.SetupRoutes(e, handlers)
 	if err := e.Start(fmt.Sprintf(":%s", "8080")); err != nil {

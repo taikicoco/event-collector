@@ -15,7 +15,7 @@ log:
 sh:
 	docker-compose exec backend sh
 mysql:
-	docker compose exec mysql mysql -uroot -ppasswordroot -Ddb
+	docker-compose exec mysql mysql -uroot -ppasswordroot -Ddb
 
 # migrate
 migrate-up:

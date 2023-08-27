@@ -1,34 +1,29 @@
-version: "3.8"
 services:
-  go-log-collector:
-    container_name: go-log-collector
+  backend:
+    container_name: backend
     build:
       context: .
-      dockerfile: docker/go/Dockerfile
+      dockerfile: ./docker/go/Dockerfile
     volumes:
       - .:/app
     working_dir: /app/server
     ports:
-      - "1222:1222"
+      - "8080:8080"
     restart: always
     tty: true
     environment:
       ENV: "development"
-      PORT: "1222"
+      PORT: "8080"
       DRIVER: "mysql"
       DATASOURCE: "user:password@tcp(mysql)/db?charset=utf8mb4&parseTime=true"
-      TZ: 'Asia/Tokyo'
-    command: sh ./scripts/api.sh
+    command: ["make", "run"]
     depends_on:
       - mysql
-    networks:
-      - glc_network
-
 
   mysql:
     container_name: mysql
-    platform: "linux/x86_64"
-    image: "mysql:5.7"
+    platform: linux/amd64
+    image: "mysql:8.0.34"
     ports:
       - "3306:3306"
     environment:
@@ -36,25 +31,9 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: passwordroot
-      TZ: 'Asia/Tokyo'
     volumes:
       - "mysql-db:/var/lib/mysql"
-      - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
-    networks:
-      - glc_network
-
-  setup:
-    container_name: setup
-    image: alpine:latest
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: cp pre-commit .git/hooks/pre-commit
 
 volumes:
   mysql-db:
     driver: local
-
-networks:
-  glc_network:
-    external: true

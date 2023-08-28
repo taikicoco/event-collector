@@ -14,11 +14,13 @@ log:
 	docker-compose logs -f
 sh:
 	docker-compose exec backend sh
+
+# db
 mysql:
 	docker-compose exec mysql mysql -uroot -ppasswordroot -Ddb
-
-# migrate
 migrate-up:
 	docker-compose exec -T backend sh ./scripts/migrate-up.sh
 migrate-down:
 	docker-compose exec -T backend sh ./scripts/migrate-down.sh
+seed:
+	docker-compose exec mysql mysql -uroot -ppasswordroot -Ddb -e "source /seed/seed.sql"

@@ -19,8 +19,6 @@ sh:
 mysql:
 	docker-compose exec mysql mysql -uroot -ppasswordroot -Ddb
 migrate-up:
-	docker-compose exec -T backend sh ./scripts/migrate-up.sh
-migrate-down:
-	docker-compose exec -T backend sh ./scripts/migrate-down.sh
+	docker-compose exec -T backend sh ../db/migrations/scripts/migrate-up.sh 
 seed:
 	docker-compose exec mysql mysql -uroot -ppasswordroot -Ddb -e "source /seed/seed.sql"

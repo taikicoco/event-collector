@@ -1,4 +1,3 @@
-
 run:
 	figlet GoLogCollector
 	go install github.com/cespare/reflex@latest

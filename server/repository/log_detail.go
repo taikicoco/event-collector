@@ -12,9 +12,8 @@ type LogDetailRepository struct{}
 
 func (lr *LogDetailRepository) GetByID(ctx context.Context, db *sqlx.DB, id uint) (*model.LogDetail, error) {
 	logDetail := &model.LogDetail{}
-	err := db.Get(logDetail, `select * from log_details where id = ?`, id)
-
-	logDetail.LogName, err = (&LogNameRepository{}).GetByID(ctx, db, logDetail.LogNameID)
+	err := db.Get(logDetail,
+		`select id, log_name_id, version from log_details where id = ?`, id)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

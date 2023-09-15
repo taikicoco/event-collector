@@ -1,4 +1,6 @@
 # backend
+run :
+	make build make upd
 build:
 	docker-compose build
 build-nc:

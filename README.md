@@ -1,1 +1,1 @@
-# GoLogCollector
+# EventCollector

@@ -29,14 +29,33 @@ func NewHandler(logName *usecase.LogName, logDetail *usecase.LogDetail,
 func SetupRoutes(e *echo.Echo, h *Handler) {
 	v1g := e.Group("/v1")
 	{
-		v1l := v1g.Group("/log")
+		// v1l := v1g.Group("/log")
+		// {
+		// 	v1ln := v1l.Group("/name")
+		// 	{
+		// 		v1ln.GET("/:id", h.GetLogName)
+		// 	}
+		// 	v1l.GET("/:id", h.GetLogDetail)
+		// 	v1l.POST("/:id", h.CreateLog)
+		// }
+
+		v1e := v1g.Group("/event_groups")
 		{
-			v1ln := v1l.Group("/name")
+			v1e.POST("/:id", h.mock)
+
+		}
+
+		v1el := v1e.Group("/event")
+		{
+			v1el.POST("/:id", h.mock)
+			v1el := v1e.Group("/log")
 			{
-				v1ln.GET("/:id", h.GetLogName)
+				v1el.POST("/:id", h.CreateEventLog)
 			}
-			v1l.GET("/:id", h.GetLogDetail)
-			v1l.POST("/:id", h.CreateLog)
 		}
 	}
+}
+
+func (h *Handler) mock(e echo.Context) error {
+	return nil
 }
